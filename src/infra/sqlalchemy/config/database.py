@@ -5,14 +5,20 @@ from sqlalchemy.orm import sessionmaker
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
+SQLALCHEMY_DATABASE_URL = "mariadb+mariadbconnector://root:root@localhost:3307/db_fastapi_backend"
+
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    SQLALCHEMY_DATABASE_URL
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    echo=True  # Habilita logging detalhado
+)
 def criar_bd():
     Base.metadata.create_all(bind=engine)
     

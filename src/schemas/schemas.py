@@ -6,7 +6,7 @@ class Usuario(BaseModel):
     telefone: str
     
 class Produto(BaseModel):
-    id: Optional[str] = None
+    id: int
     nome: str
     detalhes: str
     preco: float

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from src.schemas import schemas
 from src.models import models
+from sqlalchemy import delete
 
 
 class RepositorioUsuario():
@@ -18,3 +19,7 @@ class RepositorioUsuario():
         usuario = self.db.query(models.Usuario).all()
         return usuario
     
+    def remover(self, id:int):
+        delete_usuario = delete(models.Usuario).where(models.Usuario.id == id)
+        self.db.execute(delete_usuario)
+        self.db.commit()
