@@ -18,4 +18,10 @@ class Usuario(Base):
     nome = Column(String(100), index = True)
     telefone = Column(String(15), index = True)
     
+class Mensagem(Base):
+    
+    __tablename__ = 'mensagens' 
+    id = Column(Integer, primary_key=True, index=True)
+    mensagem = Column(String(120), index = True)
+   
 

@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.config.database import get_db, criar_bd
-from src.schemas.schemas import Produto, Usuario
+from src.schemas.schemas import Produto, Usuario, Mensagem
 from src.infra.repositorios.produto import RepositorioProduto
 from src.infra.repositorios.usuario import RepositorioUsuario
+from src.infra.repositorios.mensagem import RepositorioMensagem
 
 
 criar_bd()
@@ -40,3 +41,20 @@ def remover_usuario(id:int, db: Session = Depends(get_db)):
     repositorio = RepositorioUsuario(db)
     repositorio.remover(id)
     return {"message": "Usuario removido com sucesso"} 
+
+@app.get("/mensagens/")
+def listar_mensagens(db: Session = Depends(get_db)):
+    mensagem = RepositorioMensagem(db).listar()
+    return mensagem
+
+@app.post("/mensagens/")
+def criar_mensagens(mensagem: Mensagem, db: Session = Depends(get_db)):
+    mensagem_criada = RepositorioMensagem(db).criar(mensagem)
+    return mensagem_criada
+
+@app.delete("/mensagens/{id}")
+def remover_mensagens(id:int, db: Session = Depends(get_db)):
+    repositorio = RepositorioMensagem(db)
+    repositorio.remover(id)
+    return {"message": "Mensagem removida com sucesso"}
+

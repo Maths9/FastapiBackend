@@ -12,6 +12,10 @@ class Produto(BaseModel):
     preco: float
     disponivel: bool = False
     
+class Mensagem(BaseModel):
+    id: int
+    mensagem: str
+    
 class Config:
     orm_mode = True
     
