@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from src.infra.sqlalchemy.config.database import get_db, criar_bd
 from src.schemas.schemas import Produto, Usuario, Mensagem
 from src.infra.repositorios.produto import RepositorioProduto
@@ -9,6 +10,14 @@ from src.infra.repositorios.mensagem import RepositorioMensagem
 
 criar_bd()
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Permitir todas as origens. Para segurança, você deve especificar a(s) origem(s) permitida(s)
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos os métodos HTTP
+    allow_headers=["*"],  # Permitir todos os cabeçalhos
+)
 
 @app.post('/produtos')
 def criar_produto(produto: Produto, db: Session = Depends(get_db)):
