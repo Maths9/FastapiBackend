@@ -17,7 +17,7 @@ Base = declarative_base()
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    echo=True  # Habilita logging detalhado
+    echo=True 
 )
 def criar_bd():
     Base.metadata.create_all(bind=engine)
