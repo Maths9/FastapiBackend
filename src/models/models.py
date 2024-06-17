@@ -15,14 +15,14 @@ class Usuario(Base):
     
     __tablename__ = 'usuarios' 
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement = True)
     nome = Column(String(100), index = True)
-    telefone = Column(String(15), index = True)
+    telefone = Column(String(15), index = True, primary_key=True)
     
 class Mensagem(Base):
     
     __tablename__ = 'mensagens' 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement = True)
     mensagem = Column(String(120), index = True)
    
 

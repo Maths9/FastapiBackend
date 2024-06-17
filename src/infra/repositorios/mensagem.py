@@ -21,6 +21,10 @@ class RepositorioMensagem():
         mensagem = self.db.query(models.Mensagem).all()
         return mensagem
     
+    def listar_id(self, id:int):
+        mensagem = self.db.query(models.Mensagem).filter(models.Mensagem.id == id).first()
+        return mensagem
+    
     def remover(self, id:int):
         delete_mensagem = delete(models.Mensagem).where(models.Mensagem.id == id)
         self.db.execute(delete_mensagem)

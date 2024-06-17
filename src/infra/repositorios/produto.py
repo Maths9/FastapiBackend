@@ -22,6 +22,10 @@ class RepositorioProduto():
         produto = self.db.query(models.Produto).all()
         return produto
     
+    def listar_id(self, id:int):
+        produto = self.db.query(models.Produto).filter(models.Produto.id == id).first()
+        return produto
+    
     def remover(self, id:int):
         delete_produto = delete(models.Produto).where(models.Produto.id == id)
         self.db.execute(delete_produto)

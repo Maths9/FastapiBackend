@@ -19,6 +19,10 @@ class RepositorioUsuario():
         usuario = self.db.query(models.Usuario).all()
         return usuario
     
+    def listar_id(self, id:int):
+        usuario = self.db.query(models.Usuario).filter(models.Usuario.id == id).first()
+        return usuario
+    
     def remover(self, id:int):
         delete_usuario = delete(models.Usuario).where(models.Usuario.id == id)
         self.db.execute(delete_usuario)
