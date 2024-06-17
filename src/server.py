@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from src.infra.sqlalchemy.config.database import get_db, criar_bd
@@ -6,9 +6,9 @@ from src.schemas.schemas import Produto, Usuario, Mensagem
 from src.infra.repositorios.produto import RepositorioProduto
 from src.infra.repositorios.usuario import RepositorioUsuario
 from src.infra.repositorios.mensagem import RepositorioMensagem
-
-
-criar_bd()
+from src.infra.sqlalchemy.config.database import engine
+   
+# criar_bd()
 app = FastAPI()
 
 app.add_middleware(
@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],  
 )
 
-@app.post('/produtos')
+@app.post('/produtos', status_code=status.HTTP_201_CREATED)
 def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     try:  
         produto_criado = RepositorioProduto(db).criar(produto)
@@ -27,7 +27,7 @@ def criar_produto(produto: Produto, db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=400, detail="Erro ao criar o produto")
 
-@app.get("/produtos")
+@app.get("/produtos", status_code=status.HTTP_200_OK)
 def listar_produtos(db: Session = Depends(get_db)):
     try:
         Produto = RepositorioProduto(db).listar()
@@ -35,7 +35,7 @@ def listar_produtos(db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=404, detail="Produtos não encontrados")
     
-@app.delete("/produtos/{id}")
+@app.delete("/produtos/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def remover_produto(id:int, db: Session = Depends(get_db)):
     try:
         repositorio = RepositorioProduto(db)
@@ -44,7 +44,7 @@ def remover_produto(id:int, db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=404, detail="Produto não encontrado")  
 
-@app.post('/usuarios')
+@app.post('/usuarios', status_code=status.HTTP_201_CREATED)
 def criar_usuarios(usuario: Usuario, db: Session = Depends(get_db)):
     try:
         usuario_criado = RepositorioUsuario(db).criar(usuario)
@@ -52,7 +52,7 @@ def criar_usuarios(usuario: Usuario, db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=400, detail="Erro ao criar o usuário")
     
-@app.get("/usuarios")
+@app.get("/usuarios", status_code=status.HTTP_200_OK)
 def listar_usuarios(db: Session = Depends(get_db)):
     try:
         usuario = RepositorioUsuario(db).listar()
@@ -60,7 +60,7 @@ def listar_usuarios(db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=404, detail="Usuários não encontrados")
     
-@app.delete("/usuarios/{id}")
+@app.delete("/usuarios/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def remover_usuario(id:int, db: Session = Depends(get_db)):
     try:
         repositorio = RepositorioUsuario(db)
@@ -69,7 +69,7 @@ def remover_usuario(id:int, db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=404, detail="Usuario não encontrado")
 
-@app.post("/mensagens/")
+@app.post("/mensagens/", status_code=status.HTTP_201_CREATED)
 def criar_mensagens(mensagem: Mensagem, db: Session = Depends(get_db)):
     try:
         mensagem_criada = RepositorioMensagem(db).criar(mensagem)
@@ -77,7 +77,7 @@ def criar_mensagens(mensagem: Mensagem, db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=400, detail="Erro ao criar a mensagem")
     
-@app.get("/mensagens/")
+@app.get("/mensagens/",status_code=status.HTTP_200_OK)
 def listar_mensagens(db: Session = Depends(get_db)):
     try:
         mensagem = RepositorioMensagem(db).listar()
