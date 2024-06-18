@@ -11,21 +11,21 @@ class RepositorioLogin():
         self.db = db
         
     def criar(self, login: schemas.Login):
-        db_login = models.Login(id = login.id, login = login.login)
+        db_login = models.Login(id = login.id, nome = login.nome, senha = login.senha)
         self.db.add(db_login)
         self.db.commit()
         self.db.refresh(db_login)
         return db_login
     
     def listar(self):
-        login = self.db.query(models.login).all()
+        login = self.db.query(models.Login).all()
         return login
     
     def listar_id(self, id:int):
-        login = self.db.query(models.login).filter(models.login.id == id).first()
+        login = self.db.query(models.Login).filter(models.Login.id == id).first()
         return login
     
     def remover(self, id:int):
-        delete_login = delete(models.login).where(models.login.id == id)
+        delete_login = delete(models.Login).where(models.Login.id == id)
         self.db.execute(delete_login)
         self.db.commit()

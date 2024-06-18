@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean
+from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime
 from src.infra.sqlalchemy.config.database import Base, engine
 class Produto(Base):
     
@@ -15,7 +15,8 @@ class Login(Base):
     
     __tablename__ = 'login'
     
-    nome = Column(String(100), index = True, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement = True)
+    nome = Column(String(100), index = True)
     senha = Column(String(100), index = True)
 
     

@@ -31,7 +31,7 @@ def listar_login_id(id:int,db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="login não encontrada")
 
 @router.delete("/login/{id}")
-def remover_login(id:int, db: Session = Depends(get_db)):
+def remover_login(id:int,db: Session = Depends(get_db)):
     try:
         repositorio = RepositorioLogin(db)
         repositorio.remover(id)

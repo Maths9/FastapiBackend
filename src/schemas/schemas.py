@@ -6,6 +6,7 @@ class Usuario(BaseModel):
     telefone: str
     
 class Login(BaseModel):
+    id: Optional[int] = None
     nome: str
     senha: str
     
