@@ -6,7 +6,6 @@ from src.models.models import Base, engine
 from sqlalchemy import delete
 from src.infra.repositorios import produto
 
-
 class RepositorioProduto():
     def __init__(self, db: Session):
         self.db = db

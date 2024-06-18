@@ -3,7 +3,6 @@ from src.schemas import schemas
 from src.models import models
 from sqlalchemy import delete
 
-
 class RepositorioUsuario():
     def __init__(self, db: Session):
         self.db = db
