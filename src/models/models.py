@@ -11,6 +11,14 @@ class Produto(Base):
     disponivel = Column(Boolean)
     tamanhos = Column(String(30))
     
+class Login(Base):
+    
+    __tablename__ = 'login'
+    
+    nome = Column(String(100), index = True, primary_key=True)
+    senha = Column(String(100), index = True)
+
+    
 class Usuario(Base):
     
     __tablename__ = 'usuarios' 

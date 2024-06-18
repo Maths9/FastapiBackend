@@ -5,6 +5,10 @@ class Usuario(BaseModel):
     nome: str
     telefone: str
     
+class Login(BaseModel):
+    nome: str
+    senha: str
+    
 class Produto(BaseModel):
     id: int
     nome: str

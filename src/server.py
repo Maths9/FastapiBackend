@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.infra.sqlalchemy.config.database import get_db, criar_bd
 from src.infra.sqlalchemy.config.database import engine
-from src.routers import rotas_produtos, rotas_usuarios, rotas_mensagens
+from src.routers import rotas_produtos, rotas_usuarios, rotas_mensagens, rotas_login
    
    
 criar_bd()
@@ -18,9 +18,9 @@ app.add_middleware(
 
 app.include_router(rotas_produtos.router)
 
-
 app.include_router(rotas_usuarios.router)
 
-
 app.include_router(rotas_mensagens.router)
+
+app.include_router(rotas_login.router)
 
