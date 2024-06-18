@@ -4,7 +4,7 @@ from src.models import models
 from sqlalchemy import delete
 from src.models.models import Base, engine
 from sqlalchemy import delete
-from src.infra.repositorios import mensagem
+from src.infra.repositorios import repositorio_mensagem
 
 class RepositorioMensagem():
     def __init__(self, db: Session):

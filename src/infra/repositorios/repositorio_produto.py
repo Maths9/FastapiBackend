@@ -4,7 +4,7 @@ from src.models import models
 from sqlalchemy import delete
 from src.models.models import Base, engine
 from sqlalchemy import delete
-from src.infra.repositorios import produto
+from src.infra.repositorios import repositorio_produto
 
 class RepositorioProduto():
     def __init__(self, db: Session):
