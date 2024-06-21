@@ -21,6 +21,7 @@ class RepositorioProduto():
         produto = self.db.query(models.Produto).all()
         return produto
     
+    
     def listar_id(self, id:int):
         produto = self.db.query(models.Produto).filter(models.Produto.id == id).first()
         return produto

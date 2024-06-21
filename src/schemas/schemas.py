@@ -11,7 +11,7 @@ class Login(BaseModel):
     senha: str
     
 class Produto(BaseModel):
-    id: int
+    id: Optional[int] = None
     nome: str
     detalhes: str
     preco: float
