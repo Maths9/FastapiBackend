@@ -11,7 +11,7 @@ class RepositorioLogin():
         self.db = db
         
     def criar(self, login: schemas.Login):
-        db_login = models.Login(id = login.id, nome = login.nome, senha = login.senha)
+        db_login = models.Login(nome = login.nome, senha = login.senha, id = login.id, )
         self.db.add(db_login)
         self.db.commit()
         self.db.refresh(db_login)
