@@ -1,58 +1,38 @@
-from fastapi import FastAPI, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.infra.sqlalchemy.config.database import get_db, criar_bd
+<<<<<<< HEAD
 from src.schemas.schemas import Produto, Usuario, Mensagem, Login
 from src.infra.repositorios.produto import RepositorioProduto
 from src.infra.repositorios.usuario import RepositorioUsuario
 from src.infra.repositorios.mensagem import RepositorioMensagem
 from src.infra.repositorios.login import RepositorioLogin
+=======
+>>>>>>> 7b4c28b9ef00b3b1618b88f6b27a9577b5bb9ed7
 from src.infra.sqlalchemy.config.database import engine
+from src.routers import rotas_produtos, rotas_usuarios, rotas_mensagens, rotas_login
    
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 7b4c28b9ef00b3b1618b88f6b27a9577b5bb9ed7
 criar_bd()
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174"], 
+    allow_origins=["http://localhost:5173", "http://localhost:5174", 
+                   "http://172.22.224.1:5173", "http://192.168.3.10:5173/"], 
     allow_credentials=True,
     allow_methods=["*"],  
     allow_headers=["*"],  
 )
 
-@app.post('/produtos', status_code=status.HTTP_201_CREATED)
-async def criar_produto(produto: Produto, db: Session = Depends(get_db)):
-    try:  
-        produto_criado = await RepositorioProduto(db).criar(produto)
-        return produto_criado
-    except:
-        raise HTTPException(status_code=400, detail="Erro ao criar o produto")
+app.include_router(rotas_produtos.router)
 
-@app.get("/produtos", status_code=status.HTTP_200_OK)
-async def listar_produtos(db: Session = Depends(get_db)):
-    try:
-        Produto = RepositorioProduto(db).listar()
-        return Produto
-    except:
-        raise HTTPException(status_code=404, detail="Produtos não encontrados")
-    
-@app.get("/produtos/{id}", status_code=status.HTTP_200_OK) 
-async def listar_produtos_id(id:int, db: Session = Depends(get_db)):  
-    try:    
-        Produto = RepositorioProduto(db).listar_id(id)
-        return Produto
-    except:
-        raise HTTPException(status_code=404, detail="Produtos não encontrados")
-    
-@app.delete("/produtos/{id}")
-async def remover_produto(id:int, db: Session = Depends(get_db)):
-    try:
-        repositorio = RepositorioProduto(db)
-        repositorio.remover(id)
-        return {"message": "Produto removido com sucesso"} 
-    except:
-        raise HTTPException(status_code=404, detail="Produto não encontrado")  
+app.include_router(rotas_usuarios.router)
 
+<<<<<<< HEAD
 @app.post('/usuarios/', status_code=status.HTTP_201_CREATED)
 async def criar_usuarios(usuario: Usuario, db: Session = Depends(get_db)):
     try:
@@ -156,3 +136,9 @@ async def remover_mensagens(id:int, db: Session = Depends(get_db)):
         return {"message": "Mensagem removida com sucesso"}
     except:
         raise HTTPException(status_code=404, detail="Mensagem não encontrada")
+=======
+app.include_router(rotas_mensagens.router)
+
+app.include_router(rotas_login.router)
+
+>>>>>>> 7b4c28b9ef00b3b1618b88f6b27a9577b5bb9ed7

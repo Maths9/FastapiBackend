@@ -12,7 +12,7 @@ services:
       MARIADB_DATABASE: db_fastapi_backend
       MARIADB_USER: root
       MARIADB_PASSWORD: root
-      mysql -h localhost -P 3307 -u root -p
+      # mysql -h localhost -P 3307 -u root -p 
 
       
     ports:
