@@ -4,11 +4,8 @@ from src.models import models
 from sqlalchemy import delete
 from src.models.models import Base, engine
 from sqlalchemy import delete
-<<<<<<< HEAD:src/infra/repositorios/mensagem.py
-
-=======
 from src.infra.repositorios import repositorio_mensagem
->>>>>>> 7b4c28b9ef00b3b1618b88f6b27a9577b5bb9ed7:src/infra/repositorios/repositorio_mensagem.py
+
 
 class RepositorioMensagem():
     def __init__(self, db: Session):

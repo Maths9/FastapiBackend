@@ -7,20 +7,20 @@ from src.schemas.schemas import Login
 router = APIRouter()
 
 @router.post("/login/", status_code=status.HTTP_201_CREATED)
-def criar_login(login: Login, db: Session = Depends(get_db)):
+def criar_logins(login: Login, db: Session = Depends(get_db)):
     try:
-        login_criada =  RepositorioLogin(db).criar(login)
-        return login_criada
+        login_criado =  RepositorioLogin(db).criar(login)
+        return login_criado
     except:
-        raise HTTPException(status_code=400, detail="Erro ao criar a login")
+        raise HTTPException(status_code=400, detail="Erro ao criar o login")
     
 @router.get("/login/",status_code=status.HTTP_200_OK)
-def listar_login(db: Session = Depends(get_db)):
+def listar_logins(db: Session = Depends(get_db)):
     try:
         login = RepositorioLogin(db).listar()
         return login
     except:
-        raise HTTPException(status_code=404, detail="login não encontradas")
+        raise HTTPException(status_code=404, detail="logins não encontrados")
 
 @router.get("/login/{id}")
 def listar_login_id(id:int,db: Session = Depends(get_db)):    
@@ -28,13 +28,13 @@ def listar_login_id(id:int,db: Session = Depends(get_db)):
         login = RepositorioLogin(db).listar_id(id)
         return login
     except:
-        raise HTTPException(status_code=404, detail="login não encontrada")
+        raise HTTPException(status_code=404, detail="login não encontrado")
 
 @router.delete("/login/{id}")
 def remover_login(id:int,db: Session = Depends(get_db)):
     try:
         repositorio = RepositorioLogin(db)
         repositorio.remover(id)
-        return {"message": "login removida com sucesso"}
+        return {"message": "login removido com sucesso"}
     except:
         raise HTTPException(status_code=404, detail="login não encontrada")
