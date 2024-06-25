@@ -2,13 +2,14 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from src.infra.sqlalchemy.config.database import get_db, criar_bd
-from src.schemas.schemas import Produto, Usuario, Mensagem
+from src.schemas.schemas import Produto, Usuario, Mensagem, Login
 from src.infra.repositorios.produto import RepositorioProduto
 from src.infra.repositorios.usuario import RepositorioUsuario
 from src.infra.repositorios.mensagem import RepositorioMensagem
+from src.infra.repositorios.login import RepositorioLogin
 from src.infra.sqlalchemy.config.database import engine
    
-# criar_bd()
+criar_bd()
 app = FastAPI()
 
 app.add_middleware(
@@ -52,7 +53,7 @@ async def remover_produto(id:int, db: Session = Depends(get_db)):
     except:
         raise HTTPException(status_code=404, detail="Produto não encontrado")  
 
-@app.post('/usuarios', status_code=status.HTTP_201_CREATED)
+@app.post('/usuarios/', status_code=status.HTTP_201_CREATED)
 async def criar_usuarios(usuario: Usuario, db: Session = Depends(get_db)):
     try:
         usuario_criado = await RepositorioUsuario(db).criar(usuario)
@@ -61,21 +62,16 @@ async def criar_usuarios(usuario: Usuario, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Erro ao criar o usuário")
     
 @app.get("/usuarios", status_code=status.HTTP_200_OK)
-async def listar_usuarios(db: Session = Depends(get_db)):
-    try:
+def listar_usuarios(db: Session = Depends(get_db)):
         usuario = RepositorioUsuario(db).listar()
         return usuario
-    except:
-        raise HTTPException(status_code=404, detail="Usuários não encontrados")
+    
 
 @app.get("/usuarios/{id}", status_code=status.HTTP_200_OK)
 async def listar_usuarios_id(id:int, db: Session = Depends(get_db)):
-    try:
         usuario = RepositorioUsuario(db).listar_id(id)
         return usuario
-    except:
-        raise HTTPException(status_code=404, detail="Usuário não encontrado")
-
+    
 @app.delete("/usuarios/{id}")
 async def remover_usuario(id:int, db: Session = Depends(get_db)):
     try:
@@ -84,6 +80,49 @@ async def remover_usuario(id:int, db: Session = Depends(get_db)):
         return {"message": "Usuario removido com sucesso"} 
     except:
         raise HTTPException(status_code=404, detail="Usuario não encontrado")
+    
+@app.post('/logins/', status_code=status.HTTP_201_CREATED)
+async def criar_login(login: Login, db: Session = Depends(get_db)):
+    try:
+        login_criado = await RepositorioLogin(db).criar(login)
+        return login_criado
+    except:
+        raise HTTPException(status_code=400, detail="Erro ao criar o login")
+    
+@app.get("/logins", status_code=status.HTTP_200_OK)
+async def listar_logins(db: Session = Depends(get_db)):
+    try:
+        login = RepositorioLogin(db).listar()
+        return login
+    except:
+        raise HTTPException(status_code=404, detail="Logins não encontrados")
+    
+@app.get("/logins/{id}", status_code=status.HTTP_200_OK)
+async def listar_logins_id(id:int, db: Session = Depends(get_db)):
+    try:
+        login = RepositorioLogin(db).listar_id(id)
+        return login
+    except:
+        raise HTTPException(status_code=404, detail="Login não encontrado")
+    
+@app.delete("/logins/{id}")
+async def remover_login(id:int, db: Session = Depends(get_db)):
+    try:
+        repositorio = RepositorioLogin(db)
+        repositorio.remover(id)
+        return {"message": "Login removido com sucesso"} 
+    except:
+        raise HTTPException(status_code=404, detail="Login não encontrado")
+    
+@app.delete("/logins/{id}")
+async def remover_login(id:int, db: Session = Depends(get_db)):
+    try:
+        repositorio = RepositorioLogin(db)
+        repositorio.remover(id)
+        return {"message": "Login removido com sucesso"} 
+    except:
+        raise HTTPException(status_code=404, detail="Login não encontrado")
+    
 
 @app.post("/mensagens/", status_code=status.HTTP_201_CREATED)
 async def criar_mensagens(mensagem: Mensagem, db: Session = Depends(get_db)):
